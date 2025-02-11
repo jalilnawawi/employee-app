@@ -2,6 +2,9 @@ package com.mini.project.employee_app.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mini.project.employee_app.model.dto.request.CreateEmployeeRequestDto;
+import com.mini.project.employee_app.model.dto.request.UpdateEmployeeHireDateRequestDto;
+import com.mini.project.employee_app.model.dto.response.DeleteEmployeeResponseDto;
+import com.mini.project.employee_app.model.dto.response.UpdateEmployeeHireDateResponseDto;
 import com.mini.project.employee_app.model.entity.Employee;
 import com.mini.project.employee_app.model.enums.Gender;
 import com.mini.project.employee_app.repository.EmployeeRepository;
@@ -17,6 +20,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -48,5 +52,42 @@ class EmployeeServiceImplTest {
         Employee employee = employeeRepository.findById(4).orElse(null);
         assertNotNull(employee);
         assertEquals("Joko", employee.getFirstName());
+    }
+
+    @Test
+    void getAll() {
+        List<Employee> employeeList = employeeService.getAllEmployee();
+        assertNotNull(employeeList);
+        assertEquals(3, employeeList.size());
+    }
+
+    @Test
+    void getByEmpNo() {
+        Employee employeeByEmpNo = employeeService.getEmployeeByEmpNo(1);
+        assertNotNull(employeeByEmpNo);
+        assertEquals("Abdul", employeeByEmpNo.getFirstName());
+    }
+
+    @Test
+    void updateHireDate() {
+        UpdateEmployeeHireDateRequestDto requestDto = new UpdateEmployeeHireDateRequestDto();
+        requestDto.setHireDate(createDate(2025,02,28));
+
+        UpdateEmployeeHireDateResponseDto responseDto = employeeService.updateHireDate(1, requestDto);
+        assertEquals(1, responseDto.getEmpNo());
+    }
+
+    @Test
+    void delete() {
+        CreateEmployeeRequestDto requestDto = new CreateEmployeeRequestDto();
+        requestDto.setFirstName("Test");
+        requestDto.setLastName("Delete");
+        requestDto.setGender("M");
+        requestDto.setBirthDate(createDate(1996, 4, 2));
+        requestDto.setHireDate(createDate(2025, 2, 25));
+        employeeService.create(requestDto);
+
+        DeleteEmployeeResponseDto responseDto = employeeService.deleteEmployee(7);
+        assertEquals(7, responseDto.getEmpNo());
     }
 }

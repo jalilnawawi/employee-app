@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -22,6 +23,7 @@ public class Employee {
     private int no;
 
     @Column(name = "birth_date")
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
     private Date birthDate;
 
     @Column(name = "first_name", length = 14)
@@ -34,5 +36,6 @@ public class Employee {
     private Gender gender;
 
     @Column(name = "hire_date")
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
     private Date hireDate;
 }

@@ -1,10 +1,8 @@
 package com.mini.project.employee_app.service.impl;
 
 import com.mini.project.employee_app.model.dto.request.CreateEmployeeRequestDto;
-import com.mini.project.employee_app.model.dto.request.UpdateEmployeeHireDateRequestDto;
-import com.mini.project.employee_app.model.dto.response.CreateEmployeeResponseDto;
+import com.mini.project.employee_app.model.dto.request.UpdateEmployeeRequestDto;
 import com.mini.project.employee_app.model.dto.response.DeleteEmployeeResponseDto;
-import com.mini.project.employee_app.model.dto.response.UpdateEmployeeHireDateResponseDto;
 import com.mini.project.employee_app.model.entity.Employee;
 import com.mini.project.employee_app.model.enums.Gender;
 import com.mini.project.employee_app.repository.EmployeeRepository;
@@ -20,27 +18,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     EmployeeRepository employeeRepository;
 
     @Override
-    public CreateEmployeeResponseDto create(CreateEmployeeRequestDto createEmployeeRequestDto) {
+    public Employee create(CreateEmployeeRequestDto createEmployeeRequestDto) {
         Employee employee = new Employee();
         employee.setFirstName(createEmployeeRequestDto.getFirstName());
         employee.setLastName(createEmployeeRequestDto.getLastName());
         employee.setBirthDate(createEmployeeRequestDto.getBirthDate());
         employee.setHireDate(createEmployeeRequestDto.getHireDate());
-        if (createEmployeeRequestDto.getGender().equalsIgnoreCase("m")){
-            employee.setGender(Gender.M);
-        } else {
-            employee.setGender(Gender.F);
-        }
-        employeeRepository.save(employee);
+        employee.setGender(Gender.valueOf(createEmployeeRequestDto.getGender()));
 
-        CreateEmployeeResponseDto responseDto = new CreateEmployeeResponseDto();
-        responseDto.setEmpNo(employee.getNo());
-        responseDto.setFirstName(employee.getFirstName());
-        responseDto.setLastName(employee.getLastName());
-        responseDto.setBirthDate(employee.getBirthDate());
-        responseDto.setGender(employee.getGender());
-        responseDto.setHireDate(employee.getHireDate());
-        return responseDto;
+        return employeeRepository.save(employee);
     }
 
     @Override
@@ -54,17 +40,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public UpdateEmployeeHireDateResponseDto updateHireDate(int empNo, UpdateEmployeeHireDateRequestDto hireDateRequestDto) {
+    public Employee updateEmployee(int empNo, UpdateEmployeeRequestDto updateEmployeeRequestDto) {
         Employee employee = employeeRepository.findById(empNo).orElse(null);
-        employee.setHireDate(hireDateRequestDto.getHireDate());
-        employeeRepository.save(employee);
+        employee.setFirstName(updateEmployeeRequestDto.getFirstName());
+        employee.setLastName(updateEmployeeRequestDto.getLastName());
+        employee.setBirthDate(updateEmployeeRequestDto.getBirthDate());
+        employee.setHireDate(updateEmployeeRequestDto.getHireDate());
 
-        UpdateEmployeeHireDateResponseDto responseDto = new UpdateEmployeeHireDateResponseDto();
-        responseDto.setEmpNo(employee.getNo());
-        responseDto.setFirstName(employee.getFirstName());
-        responseDto.setLastName(employee.getLastName());
-        responseDto.setHireDate(employee.getHireDate());
-        return responseDto;
+        return employeeRepository.save(employee);
     }
 
     @Override

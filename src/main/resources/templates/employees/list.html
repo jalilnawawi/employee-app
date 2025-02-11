@@ -8,7 +8,7 @@
 <body>
 <div class="container mt-5">
     <h2>Employee List</h2>
-    <a href="/employees/form" class="btn btn-primary mb-3">Add New Employee</a>
+    <a href="/employees/add-employee-form" class="btn btn-primary mb-3">Add New Employee</a>
 
     <table id="employeeTable" class="table table-striped">
         <thead>
@@ -31,7 +31,9 @@
             <td th:text="${employee.birthDate}"></td>
             <td th:text="${employee.hireDate}"></td>
             <td>
-                <a th:href="@{/employees/edit/{id}(id=${employee.no})}" class="btn btn-warning btn-sm">Edit</a>
+                <a th:href="@{/employees/edit-employee-form/{id}(id=${employee.no})}"
+                   class="btn btn-warning btn-sm">
+                    Edit</a>
                 <a th:href="@{/employees/delete/{id}(id=${employee.no})}"
                    class="btn btn-danger btn-sm"
                    onclick="return confirm('Are you sure?')">Delete</a>

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -24,7 +25,7 @@ public class Employee {
 
     @Column(name = "birth_date")
     @DateTimeFormat(pattern = "yyyy-mm-dd")
-    private Date birthDate;
+    private LocalDate birthDate;
 
     @Column(name = "first_name", length = 14)
     private String firstName;
@@ -37,5 +38,5 @@ public class Employee {
 
     @Column(name = "hire_date")
     @DateTimeFormat(pattern = "yyyy-mm-dd")
-    private Date hireDate;
+    private LocalDate hireDate;
 }

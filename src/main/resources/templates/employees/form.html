@@ -6,10 +6,10 @@
 </head>
 <body>
 <div class="container mt-5">
-    <h2 th:text="${employee.no == null ? 'Add New Employee' : 'Edit Employee'}"></h2>
+<!--    <h2 th:text="${employeeRequestDto.no == null ? 'Add New Employee' : 'Edit Employee'}"></h2>-->
 
-    <form th:action="@{/employees/save}" th:object="${employee}" method="post">
-        <input type="hidden" th:field="*{no}">
+    <form th:action="@{/employees/save}" th:object="${employeeRequestDto}" method="post">
+<!--        <input type="hidden" th:field="*{no}">-->
 
         <div class="mb-3">
             <label for="firstName" class="form-label">First Name</label>

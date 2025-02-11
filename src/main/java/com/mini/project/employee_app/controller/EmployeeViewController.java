@@ -25,7 +25,7 @@ public class EmployeeViewController {
 
     @GetMapping("/form")
     public String showAddForm(Model model) {
-        model.addAttribute("employee", new Employee());
+        model.addAttribute("employeeRequestDto", new CreateEmployeeRequestDto());
         return "employees/form";
     }
 

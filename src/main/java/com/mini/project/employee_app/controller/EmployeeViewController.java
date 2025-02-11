@@ -34,4 +34,10 @@ public class EmployeeViewController {
         employeeService.create(employeeRequestDto);
         return "redirect:/employees";
     }
+
+    @GetMapping("/edit/{no}")
+    public String showEditForm(@PathVariable("no") int empNo, @ModelAttribute UpdateEmployeeHireDateRequestDto requestDto) {
+        employeeService.updateHireDate(empNo, requestDto);
+        return "employees/form";
+    }
 }

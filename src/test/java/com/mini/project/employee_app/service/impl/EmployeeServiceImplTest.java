@@ -79,14 +79,6 @@ class EmployeeServiceImplTest {
 
     @Test
     void delete() {
-        CreateEmployeeRequestDto requestDto = new CreateEmployeeRequestDto();
-        requestDto.setFirstName("Test");
-        requestDto.setLastName("Delete");
-        requestDto.setGender("M");
-        requestDto.setBirthDate(createDate(1996, 4, 2));
-        requestDto.setHireDate(createDate(2025, 2, 25));
-        employeeService.create(requestDto);
-
         DeleteEmployeeResponseDto responseDto = employeeService.deleteEmployee(7);
         assertEquals(7, responseDto.getEmpNo());
     }

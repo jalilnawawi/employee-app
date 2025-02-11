@@ -23,10 +23,6 @@ public class Employee {
     @Column(name = "emp_no", length = 11)
     private int no;
 
-    @Column(name = "birth_date")
-    @DateTimeFormat(pattern = "yyyy-mm-dd")
-    private LocalDate birthDate;
-
     @Column(name = "first_name", length = 14)
     private String firstName;
 
@@ -35,6 +31,10 @@ public class Employee {
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
+    @Column(name = "birth_date")
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
+    private LocalDate birthDate;
 
     @Column(name = "hire_date")
     @DateTimeFormat(pattern = "yyyy-mm-dd")

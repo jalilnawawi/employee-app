@@ -4,6 +4,7 @@ import com.mini.project.employee_app.model.dto.request.CreateEmployeeRequestDto;
 import com.mini.project.employee_app.model.dto.request.UpdateEmployeeRequestDto;
 import com.mini.project.employee_app.model.entity.Employee;
 import com.mini.project.employee_app.service.EmployeeService;
+import com.mini.project.employee_app.utils.apidocs.ApiResponseAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -26,6 +27,7 @@ public class EmployeeController {
     EmployeeService employeeService;
 
     @PostMapping
+    @ApiResponseAnnotations.CreateEmployeeApiResponses
     public ResponseEntity<Map<String, Object>> create(@RequestBody CreateEmployeeRequestDto createEmployeeRequestDto){
         Employee employee = employeeService.create(createEmployeeRequestDto);
         EntityModel<Employee> entityModel = toHateoasEntityModel(employee);

@@ -55,7 +55,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public DeleteEmployeeResponseDto deleteEmployee(int empNo) {
-        Employee employee = employeeRepository.findById(empNo).orElse(null);
+        Employee employee = employeeRepository.findById(empNo)
+                .orElseThrow(() -> new EmployeeNotFoundException(empNo));
         employeeRepository.delete(employee);
 
         DeleteEmployeeResponseDto responseDto = new DeleteEmployeeResponseDto();

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -25,20 +26,14 @@ class EmployeeServiceImplTest {
     @Autowired
     EmployeeService employeeService;
 
-    private Date createDate(int year, int month, int day) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, day);
-        return calendar.getTime();
-    }
-
     @Test
     void create() {
         CreateEmployeeRequestDto requestDto = new CreateEmployeeRequestDto();
         requestDto.setFirstName("Joko");
         requestDto.setLastName("Purnomo");
         requestDto.setGender("M");
-        requestDto.setBirthDate(createDate(1996, 4, 2));
-        requestDto.setHireDate(createDate(2025, 2, 25));
+        requestDto.setBirthDate(LocalDate.of(1996, 4, 2));
+        requestDto.setHireDate(LocalDate.of(2025, 2, 25));
         employeeService.create(requestDto);
 
         Employee employee = employeeRepository.findById(4).orElse(null);
@@ -61,17 +56,24 @@ class EmployeeServiceImplTest {
     }
 
     @Test
-    void updateHireDate() {
-        UpdateEmployeeRequestDto requestDto = new UpdateEmployeeRequestDto();
-        requestDto.setHireDate(createDate(2025,02,28));
+    void updateEmployee() {
+        UpdateEmployeeRequestDto updateEmployeeRequestDto = new UpdateEmployeeRequestDto();
+        updateEmployeeRequestDto.setFirstName("Budi");
+        updateEmployeeRequestDto.setLastName("Sudarsono");
+        updateEmployeeRequestDto.setBirthDate(LocalDate.of(1987,8,1));
+        updateEmployeeRequestDto.setHireDate(LocalDate.of(2025,2,19));
+        Employee employee = employeeService.updateEmployee(2, updateEmployeeRequestDto);
 
-        UpdateEmployeeResponseDto responseDto = employeeService.updateEmployee(1, requestDto);
-        assertEquals(1, responseDto.getEmpNo());
+        assertNotNull(employee);
+        assertEquals("Sudarsono", employee.getLastName());
     }
 
     @Test
     void delete() {
-        DeleteEmployeeResponseDto responseDto = employeeService.deleteEmployee(8);
-        assertEquals(8, responseDto.getEmpNo());
+        Employee employee = employeeService.getEmployeeByEmpNo(11);
+        assertNotNull(employee);
+
+        DeleteEmployeeResponseDto responseDto = employeeService.deleteEmployee(11);
+        assertEquals(11, responseDto.getEmpNo());
     }
 }

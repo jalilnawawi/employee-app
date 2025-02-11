@@ -1,5 +1,6 @@
 package com.mini.project.employee_app.service.impl;
 
+import com.mini.project.employee_app.exception.EmployeeNotFoundException;
 import com.mini.project.employee_app.model.dto.request.CreateEmployeeRequestDto;
 import com.mini.project.employee_app.model.dto.request.UpdateEmployeeRequestDto;
 import com.mini.project.employee_app.model.dto.response.DeleteEmployeeResponseDto;
@@ -36,12 +37,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee getEmployeeByEmpNo(int empNo) {
-        return employeeRepository.findById(empNo).orElse(null);
+        return employeeRepository.findById(empNo)
+                .orElseThrow(() -> new EmployeeNotFoundException(empNo));
     }
 
     @Override
     public Employee updateEmployee(int empNo, UpdateEmployeeRequestDto updateEmployeeRequestDto) {
-        Employee employee = employeeRepository.findById(empNo).orElse(null);
+        Employee employee = employeeRepository.findById(empNo)
+                .orElseThrow(() -> new EmployeeNotFoundException(empNo));
         employee.setFirstName(updateEmployeeRequestDto.getFirstName());
         employee.setLastName(updateEmployeeRequestDto.getLastName());
         employee.setBirthDate(updateEmployeeRequestDto.getBirthDate());

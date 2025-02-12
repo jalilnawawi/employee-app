@@ -10,6 +10,7 @@ import com.mini.project.employee_app.repository.EmployeeRepository;
 import com.mini.project.employee_app.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     EmployeeRepository employeeRepository;
 
+    @Transactional
     @Override
     public Employee create(CreateEmployeeRequestDto createEmployeeRequestDto) {
         Employee employee = new Employee();
@@ -41,6 +43,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .orElseThrow(() -> new EmployeeNotFoundException(empNo));
     }
 
+    @Transactional
     @Override
     public Employee updateEmployee(int empNo, UpdateEmployeeRequestDto updateEmployeeRequestDto) {
         Employee employee = employeeRepository.findById(empNo)
@@ -53,6 +56,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeRepository.save(employee);
     }
 
+    @Transactional
     @Override
     public DeleteEmployeeResponseDto deleteEmployee(int empNo) {
         Employee employee = employeeRepository.findById(empNo)
